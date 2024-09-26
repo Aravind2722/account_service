@@ -5,6 +5,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -41,10 +42,17 @@ import java.util.UUID;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(16);
+    private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    public SecurityConfig(BCryptPasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
+
+
+//    @Bean
+//    public BCryptPasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder(16);
+//    }
 
     @Bean
     @Order(1)
@@ -101,7 +109,7 @@ public class SecurityConfig {
                                                  // hardcoding the Bcrypted password ***
                 .username("user")
 //                .password("$2a$16$1gHzwee22DdLggRrwO6f.u3cA6pViWiGtP2/0Qo7tpX4gZfufuNY.")
-                .password(passwordEncoder().encode("password"))
+                .password(passwordEncoder.encode("password"))
                 .roles("USER")
                 .build();
 
