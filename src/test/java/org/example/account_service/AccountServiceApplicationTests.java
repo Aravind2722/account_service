@@ -39,7 +39,7 @@ class AccountServiceApplicationTests {
                 .postLogoutRedirectUri("https://oauth.pstmn.io/v1/callback")
                 .scope(OidcScopes.OPENID)
                 .scope(OidcScopes.PROFILE)
-//                .scope("ADMIN")
+                .scope("ADMIN")
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
                 .build();
 
